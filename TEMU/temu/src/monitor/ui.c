@@ -38,6 +38,28 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+static int cmd_info(char* args){
+	if(args[0] == 'r'){
+		display_reg();
+		return 0;
+	}
+	if(args[0] == 'w'){
+		return 0;
+	}
+	printf("bad command please type 'help' for help\n");
+	return -1;
+}
+
+static int cmd_si(char* args){
+	if(args == NULL){
+		cpu_exec(1);
+		return 0;
+	}
+	int step = atoi(args);
+	printf("%d \n",step);
+	cpu_exec(step);
+	return 0;
+}
 static struct {
 	char *name;
 	char *description;
@@ -45,8 +67,9 @@ static struct {
 } cmd_table [] = {
 	{ "help", "Display informations about all supported commands", cmd_help },
 	{ "c", "Continue the execution of the program", cmd_c },
-	{ "q", "Exit TEMU", cmd_q }
-
+	{ "q", "Exit TEMU", cmd_q },
+	{ "info", "info register",cmd_info},
+	{ "si","step execute",cmd_si},
 	/* TODO: Add more commands */
 
 };

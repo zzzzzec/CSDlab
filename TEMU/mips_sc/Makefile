@@ -35,7 +35,7 @@ export	TESTCASE_BUILD_DIR
 # Rules of Compilation
 # ********************
 
-all: inst.bin data.bin convert
+all: clean inst.bin data.bin convert
 	@./convert inst.bin data.bin
 	@mv convert $(TESTCASE_BUILD_DIR)
 	@mv inst_rom.coe $(TESTCASE_BUILD_DIR)$(USER_PROGRAM)_inst.coe
@@ -60,3 +60,6 @@ data.bin: $(TESTCASE_BUILD_DIR)$(USER_PROGRAM)
 
 convert: convert.c
 	gcc $< -o $@
+
+clean:
+	rm -f ../*.bin

@@ -5,7 +5,7 @@
    |        
    |--temu/			: temu源程序目录
    |
-   |--Makefile			: make脚本
+  |--Makefile			: make脚本
 
 目录"mips_sc"用于保存测试程序，并对其进行编译，包含build和src文件夹，convert.c，default.ld， Makefile文件。
 目前测试程序仅支持汇编形式。

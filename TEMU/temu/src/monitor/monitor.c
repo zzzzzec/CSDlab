@@ -3,6 +3,7 @@
 #define ENTRY_START 0xbfc00000
 
 char *exec_file;
+//这里为什么不用 extern ，这样可以引用到吗？
 uint8_t *hw_mem;
 CPU_state cpu;
 
@@ -20,6 +21,7 @@ static void init_log() {
 static void welcome() {
 	printf("Welcome to TEMU!\nThe executable is %s.\nFor help, type \"help\"\n",
 			exec_file);
+	printf("Dram Addr = %p\n",hw_mem);
 }
 
 void init_monitor(int argc, char *argv[]) {
@@ -41,13 +43,20 @@ void init_monitor(int argc, char *argv[]) {
 
 static void load_entry() {
 	int ret;
-
+	/*
+		-------------------------------------------------------------------------------
+		+																		+	  +
+		+数据																	+ 指令 +
+		-------------------------------------------------------------------------------
+		 ^ 																		^	  ^ 地址：1fff_ffff最大内存
+		地址=0 数据段 														地址:1fc0_0000数据（一开始PC也指向这里）
+	*/
 	FILE *fp = fopen("inst.bin", "rb");
 	Assert(fp, "Can not open 'inst.bin'");
 	fseek(fp, 0, SEEK_END);
 	size_t file_size = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
-	ret = fread((void *)(hw_mem + (ENTRY_START & 0x1fffffff)), file_size, 1, fp);  // load .text segment to memory address 0x1fc00000
+	ret = fread((void *)(hw_mem + (ENTRY_START & 0x1fffffff)), file_size, 1, fp);  // load .text segment to memory address 0x1fc00000 加载 inst.bin 到  0x1fc00000
 	assert(ret == 1);
 
 	fp = fopen("data.bin", "rb");

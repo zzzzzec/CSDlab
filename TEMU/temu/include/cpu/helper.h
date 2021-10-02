@@ -26,9 +26,15 @@
 /* All function defined with 'make_helper' return the length of the operation. */
 #define make_helper(name) void name(uint32_t pc)
 
+
+
 static inline uint32_t instr_fetch(uint32_t addr, size_t len) {
 	return mem_read(addr, len);
 }
+
+uint32_t sign_extend(uint32_t imm);
+uint32_t zero_extend(uint32_t imm);
+int IntegerOverflow(int x,int y);
 
 /* shared by all helper function */
 extern Operands ops_decoded;
