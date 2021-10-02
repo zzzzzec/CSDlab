@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "elf.h": "c",
+        "monitor.h": "c",
+        "helper.h": "c",
+        "reg.h": "c",
+        "common.h": "c",
+        "macro.h": "c",
+        "temu.h": "c"
+    },
+    "workbench.editor.enablePreview": false,
+}
